@@ -1,20 +1,17 @@
 [
-  {
-    "name": "Создать новое фото",
-    "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Initiate photo generation flow"
-            }
-          }
-        ],
-        "send": {
-          "callback": "new_request:start"
-        }
-      }
-    ]
-  }
+  { "name": "new photo asks for retention consent", "steps": [
+    { "send": { "callback": "new_request:start" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Я могу хранить ваши готовые фото 90 дней, чтобы вы могли скачать их позже. Согласны?" } }] }
+  ] },
+  { "name": "consented user can choose a style", "steps": [
+    { "send": { "callback": "new_request:start" }, "expect": [{ "method": "sendMessage" }] },
+    { "send": { "callback": "retention:yes" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Спасибо! Фото будут доступны вам 90 дней." } }, { "method": "sendMessage", "payload": { "text": "Напишите ключевые слова через запятую. Например: кофе, утро, уют." } }] },
+    { "send": { "text": "кофе, утро, уют" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Какое настроение выбрать для фото?" } }] }
+  ] },
+  { "name": "photo generation delivers a JPEG and keeps it in history", "steps": [
+    { "send": { "callback": "new_request:start" }, "expect": [{ "method": "sendMessage" }] },
+    { "send": { "callback": "retention:yes" }, "expect": [{ "method": "sendMessage" }] },
+    { "send": { "text": "город, закат" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Какое настроение выбрать для фото?" } }] },
+    { "send": { "callback": "style:cinematic" }, "expect": [{ "method": "editMessageText", "payload": { "text": "Готовлю ваше фото. Это обычно занимает пару минут." } }, { "method": "sendPhoto", "payload": { "caption": "Ваше фото готово. Оно будет ждать в «Мои фото» 90 дней." } }] },
+    { "send": { "callback": "history:view" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Ваши фото за последние 90 дней: 1." } }, { "method": "sendPhoto" }] }
+  ] }
 ]
