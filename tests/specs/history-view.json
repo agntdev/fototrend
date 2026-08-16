@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Мои фото",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Show user's photo history with download/delete options"
+            }
+          }
+        ],
+        "send": {
+          "callback": "history:view"
+        }
+      }
+    ]
+  }
+]
