@@ -1,20 +1,5 @@
 [
-  {
-    "name": "Мои фото",
-    "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Show user's photo history with download/delete options"
-            }
-          }
-        ],
-        "send": {
-          "callback": "history:view"
-        }
-      }
-    ]
-  }
+  { "name": "photo history has a helpful empty state", "steps": [
+    { "send": { "callback": "history:view" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Пока нет сохранённых фото — создайте первое, и оно появится здесь." } }] }
+  ] }
 ]
