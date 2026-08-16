@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Создать новое фото",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Initiate photo generation flow"
+            }
+          }
+        ],
+        "send": {
+          "callback": "new_request:start"
+        }
+      }
+    ]
+  }
+]
